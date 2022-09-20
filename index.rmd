@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r}
+library(ggplot2)
+
 nba_data<- read.csv('C:/Users/werol/Downloads/NBAstats/nba_stats.csv')
 head(nba_data)
 
@@ -23,22 +25,6 @@ three_point
 outliers <- subset(nba_data_3, X3PA>625, X3P.>.375)
 outliers
 ```
-```{r}
-nba_data_1_3era <- subset(nba_data_1, Year>1979)
-head(nba_data_1_3era)
 
-nba_3era_numeric <- nba_data_1_3era[,c(2, 8, 9, 12, 15, 16, 32, 34, 35, 37, 38)]
-
-head(nba_3era_numeric)
-#pairs(nba_3era_numeric)
-pairs(nba_3era_numeric[,c(1, 8, 9)])
-```
-```{r}
-nba_3x3 <- nba_data_1_3era[,c(8,9)]
-head(nba_3x3)
-three_point <- ggplot(data = nba_3x3, mapping = aes(x = "X3PA",y = "X3P.")) + geom_point()
-three_point
-#three_point + geom_point()
-```
 
 
