@@ -12,6 +12,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 library(ggplot2)
+install.packages(ggthemes)
+install.packages(viridis)
+library(viridisLite)
 
 nba_data<- read.csv('C:/Users/werol/Downloads/NBAstats/nba_stats.csv')
 head(nba_data)
@@ -19,8 +22,26 @@ head(nba_data)
 nba_data_3 <- subset(nba_data, Year>1979)
 head(nba_data_3)
 
-three_point <- ggplot(data = nba_data_3, mapping = aes(x = X3P.,y = X3PA, color = Player)) + geom_point() + scale_colour_manual(values = c("Stephen Curry" = "green", "James Harden" = "red", "Klay Thompson" = "blue"))
+three_point <- ggplot(data = nba_data_3, mapping = aes(x = X3P.,y = X3PA, color = Player)) +
+               geom_point(alpha = .5) +
+               scale_colour_manual(values = c(
+                "Stephen Curry" = "green", 
+                "James Harden" = "red", 
+                "Klay Thompson" = "blue")) +
+               scale_alpha_manual(values = c(
+                "Stephen Curry" = 1,
+                "James Harden" = 1,
+                "Klay Thompson" = 1)) +
+               xlab("3-point percentage") +
+               ylab("3-point attempts")
+
+
 three_point
+
+three_point + theme_classic() + ggtitle("3-point Shooting Numbers for Every Player Across Every Season") + scale_fill_grey()
+
+three_point_year <- three_point + facet_wrap(~Year)
+three_point_year
 
 outliers <- subset(nba_data_3, X3PA>625, X3P.>.375)
 outliers
